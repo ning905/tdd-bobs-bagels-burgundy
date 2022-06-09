@@ -1,15 +1,15 @@
 
 const menu = [
   {
-    item: 'bagel',
+    name: 'bagel',
     price: 2.99
   },
   {
-    item: 'brownie',
-    brownie: 3.99
+    name: 'brownie',
+    price: 3.99
   },
   {
-    item: 'chocolateBagel',
+    name: 'chocolateBagel',
     price: 4.99
   }
 ]

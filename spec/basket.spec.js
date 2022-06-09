@@ -1,9 +1,6 @@
 const Basket = require('../src/basket.js')
 describe('Basket', () => {
-//   let basket
-//   const smallBasket = 5;
-//   const mediumBasket = 10;
-//   const largeBasket = 15;
+  let basket
 
   beforeEach(() => {
     basket = new Basket();
@@ -15,14 +12,11 @@ describe('Basket', () => {
 //     expect(getBasket).toEqual(expected)
 //   })
 
-/* Part 1-1
-As a member of the public
-So I can order a bagel when I want to
-I'd like to add an item to my basket */
+/* Part 1-1 */
   it('Add items to basket', () => {
     const expected = [
-      { item: 'bagel', quantity: 1, price: 2.99 },
-      { item: 'brownie', quantity: 3, price: 3.99 }]
+      { name: 'bagel', quantity: 1, price: 2.99 },
+      { name: 'brownie', quantity: 3, price: 3.99 }]
 
     basket.addItem('bagel', 1)
     basket.addItem('brownie', 3)
@@ -37,10 +31,7 @@ I'd like to add an item to my basket */
     expect(result).toEqual(expected)
   })
 
-/* Part 2-1
-As a member of the public,
-So that I can not overfill my small bagel basket
-I'd like to know when my basket is full when I try adding an item beyond my basket capacity. */
+/* Part 2-1 */
 it('Alert when basket is full', () => {
     const expected = 'Basket full, Please choose a bigger basket.'
 
@@ -49,24 +40,38 @@ it('Alert when basket is full', () => {
     expect(result).toEqual(expected)
   })
 
-/* Part 1-2
-As a member of the public,
-So that I can change my order
-I'd like to remove an item from my basket */
-  it('Remove bagel from basket', () => {
+/* Part 1-2 */
+  it('Remove all bagels from basket', () => {
     const expected = [
-      { item: 'brownie', quantity: 3, price: 3.99 }]
+      { name: 'brownie', quantity: 3, price: 3.99 }]
 
     basket.addItem('bagel', 1)
     basket.addItem('brownie', 3)
-    const remainingItems = basket.removeItem('bagel')
-    expect(remainingItems).totoEqual(expected)
+    const remainingItems = basket.removeItem('bagel', 1)
+    expect(remainingItems).toEqual(expected)
   })
 
-/* Part 2-3
-As a member of the public
-So that I can maintain my sanity
-I'd like to know if I try to remove an item that doesn't exist in my basket. */
+  it('Remove a bagel from basket, leave remaining bagel', () => {
+    const expected = [
+      { name: 'bagel', quantity: 1, price: 2.99 },
+      { name: 'brownie', quantity: 3, price: 3.99 }]
+
+    basket.addItem('bagel', 2)
+    basket.addItem('brownie', 3)
+    const remainingItems = basket.removeItem('bagel', 1)
+    expect(remainingItems).toEqual(expected)
+  })
+
+  it('Remove more bagels than are in the basket', () => {
+    const expected = 'Can\'t remove items than are in your basket!'
+
+    basket.addItem('bagel', 2)
+    basket.addItem('brownie', 3)
+    const remainingItems = basket.removeItem('bagel', 3)
+    expect(remainingItems).toEqual(expected)
+  })
+
+/* Part 2-3 */
 it('Alert when trying to remove item that doesn\'t exist inside basket', () => {
     const expected = 'This item is not in the basket.'
 
@@ -76,20 +81,14 @@ it('Alert when trying to remove item that doesn\'t exist inside basket', () => {
     expect(alert).toEqual(expected)
   })
 
-/* Part 2-2
-As a Bob's Bagels manager,
-So that I can record more sales
-I’d like to create baskets with larger capacity when I need to. */
+/* Part 2-2 */
   it('Create basket with larger size', () => {
     basket.increaseCapacity(2)
-    const result = this.basketSize
+    const result = basket.basketSize
     expect(result).toEqual(7)
   })
 
 /* Part 3-1
-As a member of the public,
-So that I can know how much my bagels are,
-I’d like to see the price of each item before I add it to my basket. */
   it('price checker for items', () => {
     const expected = 3.99
 
@@ -110,9 +109,6 @@ I’d like to see the price of each item before I add it to my basket. */
   })
 
 /* Part 3-2
-As a member of the public,
-So that I can prepare to pay
-When I go to checkout I'd like to know the total sum of the bagels in my basket */
   it('basket total', () => {
     const expected = '£29.93'
 
@@ -121,5 +117,5 @@ When I go to checkout I'd like to know the total sum of the bagels in my basket 
     basket.addItem('brownie', 3)
     const result = basket.getBasketTotal()
     expect(result).toEqual(expected)
-  })
+  }) */
 })

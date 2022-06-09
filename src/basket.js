@@ -3,6 +3,7 @@ const menu = require('./menu.js')
 class Basket {
   constructor () {
     this.basket = []
+    this.basketQuantity = 0
     this.basketSize = 5
   }
 
@@ -11,34 +12,46 @@ class Basket {
   }
 
   addItem (itemName, itemQuantity) {
-    for (const items in menu) {
-      if (items === itemName) {
-        const insideBasket = {
-          item: itemName,
-          quantity: itemQuantity,
-          price: fullmenu[items]
-        }
-        this.basket.push(insideBasket)
-      }
+    if (itemQuantity <= 0) {
+      return 'Can\'t add negative bagels!'
     }
-  }
-
-  removeItem (itemName) {
-    for (let i = 0; i < this.basket.length; i++) {
-      if (this.basket[i].item === itemName) {
-        this.basket.splice(i, 1)
-        return this.basket
-      } else if (this.basket[i].item !== itemName)
-        return 'This item is not in the basket.'
-    }
-  }
-
-  basketCapacity () {
-    const totalCapacity = this.basket.reduce((total, quantity) => { return total + quantity.quantity }, 0)
-    if (totalCapacity > this.basketSize) {
+    if (this.basketQuantity + itemQuantity > this.basketSize) {
       return 'Basket full, Please choose a bigger basket.'
     }
+    for (let index = 0; index < menu.length; index++) {
+      if (menu[index].name === itemName) {
+        const itemToAdd = menu[index]
+        itemToAdd.quantity = itemQuantity
+        this.basketQuantity += itemQuantity
+        this.basket.push(itemToAdd)
+      }
+    }
+    return this.basket
   }
+
+  removeItem (itemName, itemQuantity) {
+    for (let index = 0; index < this.basket.length; index++) {
+      if (this.basket[index].name === itemName) {
+        if (this.basket[index].quantity === itemQuantity) {
+          this.basket.splice(index, 1)
+          this.basketQuantity -= itemQuantity
+          return this.basket
+        } else if (this.basket[index].quantity > itemQuantity) {
+          this.basket[index].quantity -= itemQuantity
+          this.basketQuantity -= itemQuantity
+          return this.basket
+        } else if (this.basket[index].quantity < itemQuantity) {
+          return 'Can\'t remove items than are in your basket!'
+        }
+      }
+    }
+    return 'This item is not in the basket.'
+  }
+
+  increaseCapacity (num) {
+    this.basketSize += num
+  }
+
 
   priceChecker (itemName) {
     const fullmenu = menu.Getmenu()
