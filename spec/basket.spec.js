@@ -40,6 +40,18 @@ it('Alert when basket is full', () => {
     expect(result).toEqual(expected)
   })
 
+  it('favourite bagel quantity', () => {
+    const expected = [
+      { name: 'chocolateBagel', quantity: 3, price: 4.99 }
+    ]
+
+    basket.addItem('chocolateBagel', 1)
+    basket.addItem('chocolateBagel', 1)
+    basket.addItem('chocolateBagel', 1)
+    const result = basket.basket
+    expect(result).toEqual(expected)
+  })
+
 /* Part 1-2 */
   it('Remove all bagels from basket', () => {
     const expected = [
@@ -88,7 +100,7 @@ it('Alert when trying to remove item that doesn\'t exist inside basket', () => {
     expect(result).toEqual(7)
   })
 
-/* Part 3-1
+/* Part 3-1 */
   it('price checker for items', () => {
     const expected = 3.99
 
@@ -96,26 +108,15 @@ it('Alert when trying to remove item that doesn\'t exist inside basket', () => {
     expect(result).toEqual(expected)
   })
 
-  it('favourite bagel quantity', () => {
-    const expected = [
-      { item: 'chocolateBagel', quantity: 3, price: 4.99 }
-    ]
-
-    basket.addItem('chocolateBagel', 1)
-    basket.addItem('chocolateBagel', 1)
-    basket.addItem('chocolateBagel', 1)
-    let result = basket.getBasket()
-    expect(result).toEqual(expected)
-  })
-
-/* Part 3-2
+/* Part 3-2 */
   it('basket total', () => {
     const expected = '£29.93'
 
     basket.addItem('chocolateBagel', 3)
     basket.addItem('bagel', 1)
+    basket.increaseCapacity(10)
     basket.addItem('brownie', 3)
     const result = basket.getBasketTotal()
     expect(result).toEqual(expected)
-  }) */
+  })
 })
